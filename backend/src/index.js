@@ -6,6 +6,8 @@ import { connectDB } from "./lib/db.js";
 import { clerkMiddleware } from "@clerk/express";
 import clerkWebhook from "./webhooks/clerk.webhook.js";
 
+import authRoutes from "./routes/auth.route.js";
+
 const app = express();
 
 const PORT = process.env.PORT ?? 3000;
@@ -29,6 +31,8 @@ app.use(clerkMiddleware());
 app.get("/health", (req, res) => {
   res.status(200).json({ ok: true });
 });
+
+app.use("/api/auth", authRoutes);
 
 app.listen(PORT, () => {
   connectDB();
